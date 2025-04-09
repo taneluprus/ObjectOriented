@@ -19,20 +19,24 @@ var Resistor = /** @class */ (function () {
             return false;
         }
     };
+    Resistor.prototype.GetResistance = function () {
+        return this.r;
+    };
     return Resistor;
 }());
 //VÕIMSUSE ARVUTAMINE
-var r1 = new Resistor(100, 0.5);
-console.log(r1.getPower(12));
-console.log(r1.getCurrent(12));
-console.log(r1.getMaximum(12));
+//console.log(r1.getPower(12));
+//console.log(r1.getCurrent(12));
+//console.log(r1.getMaximum(12)) 
 var resistorArray = [];
+var r1 = new Resistor(100, 0.5);
 var r2 = new Resistor(500, 0.5);
 var r3 = new Resistor(200, 0.5);
 var r4 = new Resistor(1000, 0.5);
 //let resistorArray: Resistor[] = [r1,r2,r3,r4] ;
 resistorArray.push(r1, r2, r3, r4);
 console.log(resistorArray);
+//RÖÖPÜHENDUS
 var maxKontroll = function (r, u) {
     if (r.getMaximum(u) === true) {
         return true;

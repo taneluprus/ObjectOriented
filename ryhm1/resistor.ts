@@ -19,18 +19,36 @@ class Resistor {
       return false;
     }
     }
+    GetResistance(): number {
+      return this.r;
+    }
 }
 
+
+class SeriesCircuit {
+  resistors: Resistor[]=[]
+  push(r: Resistor) {
+    this.resistors.push(r)
+  }
+  getTotalResistance() {
+    let sum: number = 0
+    this.resistors.forEach((r: Resistor) => { sum += r.GetResistance() });
+    return sum;
+  }
+  getCurrent(u: number) {
+    return u / this.getTotalResistance();
+  }
+}
 
 
 //VÕIMSUSE ARVUTAMINE
 
-let r1 = new Resistor(100, 0.5)
-console.log(r1.getPower(12));
-console.log(r1.getCurrent(12));
-console.log(r1.getMaximum(12)) 
+//console.log(r1.getPower(12));
+//console.log(r1.getCurrent(12));
+//console.log(r1.getMaximum(12)) 
 
 let resistorArray: Resistor[] = [];
+let r1 = new Resistor(100, 0.5)
 let r2 = new Resistor(500, 0.5)
 let r3 = new Resistor(200, 0.5)
 let r4 = new Resistor(1000, 0.5)
@@ -38,9 +56,24 @@ let r4 = new Resistor(1000, 0.5)
 //let resistorArray: Resistor[] = [r1,r2,r3,r4] ;
 
 resistorArray.push(r1,r2,r3,r4);
+//console.log(resistorArray)
 
-console.log(resistorArray)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//RÖÖPÜHENDUS
 let maxKontroll = function (r:Resistor, u:number) {
   if (r.getMaximum(u) === true) {
     return true
@@ -50,14 +83,13 @@ let maxKontroll = function (r:Resistor, u:number) {
 }
 
 let okArray: Resistor[] = []
-
 resistorArray.forEach((Resistor) => {
   if (maxKontroll(Resistor, 12) === true) {
     okArray.push(Resistor)
   }
 })
-
 console.log(okArray)
+
 
 //KOLM TAKISTIT MASSIIVIS
 // let r1: Resistor = new Resistor(110);
