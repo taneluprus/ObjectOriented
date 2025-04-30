@@ -5,6 +5,6 @@
     "typecript": "^0.0.1-security"
   },
   "devDependencies": {
-    "@types/node": "^22.13.17"
+    "@types/node": "^22.14.1"
   }
 }
