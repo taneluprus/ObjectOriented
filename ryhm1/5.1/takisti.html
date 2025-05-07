@@ -2,30 +2,40 @@
 <html>
   <head>
     <title>Takisti</title>
-    <script src="takisti2.js"></script>
+    <script src="jada.js"></script>
     <script>
-        let r1;
-        let r2;
+        let r11, r12,r13, r21,r22,r23 ,sc1, sc2;
         function startPage(){
-           r1=new Resistor(220, canvas1.getContext("2d"), 50, 150, 100);
-           range1.value=r1.getR()
-           range2.value=r1.getU
-           r1.name="Takisti 1"
-           
-           r2=new Resistor(4700, canvas1.getContext("2d"), 150, 250, 100);
-           range2.value=r2.getR();  
-           range4.value=r2.getU();
-           r2.name="Takisti 1"
+           r11=new Resistor(110, "takist1"); 
+           r12=new Resistor(220, "takisti2");
+           r13=new Resistor(330, "takisti3");
+           r21=new Resistor(110, "takist1"); 
+           r22=new Resistor(220, "takisti2");
+           r23=new Resistor(330, "takisti3");
+           sc1=new SeriesCircuit(canvas1.getContext("2d"), 30, 50);
+           sc1.push(r11);
+           sc1.push(r12);
+           sc1.push(r13);
+           sc2=new SeriesCircuit(canvas1.getContext("2d"), 30, 100);
+           sc2.push(r21);
+           sc2.push(r22);
+           sc2.push(r23);
+            range11.value=r11.getR();
+            range12.value=r12.getR();
+            range13.value=r13.getR();
+            range21.value=r11.getR();
+            range22.value=r12.getR();
+            range23.value=r13.getR();
         }
     </script>
-    <meta charset="utf-8">
   </head>
   <body onload="startPage()">
-      <canvas id="canvas1" width="400" height="300"></canvas>
-      <input type="range" id="range1" min="100" max="10000" onmousemove="r1.setR(this.valueAsNumber)" />
-      <input type="range" id="range2" min="100" max="10000" onmousemove="r1.setU(this.valueAsNumber)" />
-      <input type="range" id="range3" min="100" max="10000" onmousemove="r2.setR(this.valueAsNumber)" />
-      <input type="range" id="range4" min="100" max="10000" onmousemove="r2.setU(this.valueAsNumber)" />
+      <canvas id="canvas1" width="1000" height="300"></canvas> <br />
+      <input type="range" id="range11" min="100" max="1000" onclick="r11.setR(this.valueAsNumber)" />
+      <input type="range" id="range12" min="100" max="1000" onclick="r12.setR(this.valueAsNumber)" />
+      <input type="range" id="range13" min="100" max="1000" onclick="r13.setR(this.valueAsNumber)" />
+      <input type="range" id="range11" min="100" max="1000" onclick="r21.setR(this.valueAsNumber)" />
+      <input type="range" id="range12" min="100" max="1000" onclick="r22.setR(this.valueAsNumber)" />
+      <input type="range" id="range13" min="100" max="1000" onclick="r23.setR(this.valueAsNumber)" />
   </body>
 </html>
-

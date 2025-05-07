@@ -1,0 +1,86 @@
+TAKISTI
+protected u: number=0
+protected i: number=0
+protected name: string=""
+protected p: number=0;
+constructor(protected r)
+
+}
+draw(){
+    this.g.clearRect(this.startx, this.y-this.height, this.width, this.height*2);
+    this.g.beginPath();
+    this.g.moveTo(this.startx, this.y);
+    this.g.lineTo(this.startx+this.width/4, this.y);
+    this.g.rect(this.startx+this.width/4, this.y-this.height/3, this.width/2, this.height*2/3);
+    this.g.moveTo(this.startx+this.width*3/4, this.y);
+    this.g.lineTo(this.endx, this.y);
+    this.g.stroke();
+    this.g.fillText(this.r+" Ω", this.startx+this.width/3, this.y+3);
+    this.g.fillText(this.u+" V, "+this.i.toFixed(3)+" A", this.startx+this.width/4, this.y-this.height/3-2);
+    this.g.fillText(this.name, this.startx+this.width/4, this.y+30)
+    this.g.fillText(this.p.toFixed(3)+" W", this.startx+this.width/4, this.y+this.height/2);
+}
+setR(r:number){
+    this.r=r;
+    this.draw();
+    //console.log(r)
+}
+getR():number{
+    return this.r;
+}
+setU(u: number){
+    this.u=u;
+    this.calculateCurrent();
+    this.draw()
+}
+getU():number{
+    return this.u;
+}
+calculateCurrent(){
+    this.i=this.u/this.r;
+}
+calculatePower(){
+    this.p = this.u*this.i
+}
+
+
+
+
+
+
+
+
+
+
+html
+<!doctype html>
+<html>
+  <head>
+    <title>Takisti</title>
+    <script src="takisti2.js"></script>
+    <script>
+        let r1;
+        let r2;
+        function startPage(){
+           r1=new Resistor(220, canvas1.getContext("2d"), 50, 150, 100);
+           range1.value=r1.getR()
+           range2.value=r1.getU
+           r1.name="Takisti 1"
+           
+           r2=new Resistor(4700, canvas1.getContext("2d"), 150, 250, 100);
+           range2.value=r2.getR();  
+           range4.value=r2.getU();
+           r2.name="Takisti 2"
+        }
+    </script>
+    <meta charset="utf-8">
+  </head>
+  <body onload="startPage()">
+      <canvas id="canvas1" width="400" height="300"></canvas>
+      <input type="range" id="range1" min="100" max="10000" onmousemove="r1.setR(this.valueAsNumber)" />
+      <input type="range" id="range2" min="100" max="10000" onmousemove="r1.setU(this.valueAsNumber)" />
+      <input type="range" id="range3" min="100" max="10000" onmousemove="r2.setR(this.valueAsNumber)" />
+      <input type="range" id="range4" min="100" max="10000" onmousemove="r2.setU(this.valueAsNumber)" />
+  </body>
+</html>
+
