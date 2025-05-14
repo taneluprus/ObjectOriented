@@ -10,18 +10,12 @@ var Resistor = /** @class */ (function () {
         this.parent = p;
     };
     Resistor.prototype.draw = function (g, startx, y) {
-        g.clearRect(startx, y - this.height / 2, this.width, this.height);
+        g.clearRect(startx, y - this.height / 2, this.width + 20, this.height);
         g.beginPath();
         g.moveTo(startx, y);
         g.lineTo(startx + this.width / 4, y);
         g.rect(startx + this.width / 4, y - 10, this.width / 2, 20);
         g.fillText(this.name + "   " + this.r + " Ω", startx + this.width / 4 + 5, y + 2);
-        if (this.r > 500) {
-            g.strokeStyle = "brown";
-            this.g.beginPath();
-            this.g.rect(startx, y, startx + 150, y + 40);
-            this.g.stroke();
-        }
         g.moveTo(startx + this.width * 3 / 4, y);
         g.lineTo(startx + this.width, y);
         g.stroke();
@@ -67,13 +61,20 @@ var SeriesCircuit = /** @class */ (function () {
         this.g.beginPath();
         this.g.rect(areaStartX, this.y - 20, x - areaStartX, 40);
         this.g.stroke();
-        this.g.strokeStyle = "black";
-        this.g.beginPath();
-        this.g.moveTo(x, this.y);
-        x += 5;
-        this.g.lineTo(x, this.y);
-        this.g.stroke();
-        this.g.fillText(this.getR() + " Ω", this.startx + this.width / 2 - 10, this.y + 20);
+        for (var i = 0; i < this.resistors.length; i++) {
+            if (this.resistors[i].getR() > 500) {
+                this.g.strokeStyle = "brown";
+            }
+            else {
+                this.g.strokeStyle = "black";
+            }
+            this.g.beginPath();
+            this.g.moveTo(x, this.y);
+            x += 5;
+            this.g.lineTo(x, this.y);
+            this.g.stroke();
+            this.g.fillText(this.getR() + " Ω" + "   " + this.biggestR() + " Ω", this.startx + this.width / 2 - 10, this.y + 20);
+        }
     };
     SeriesCircuit.prototype.getR = function () {
         var result = 0;
@@ -82,6 +83,14 @@ var SeriesCircuit = /** @class */ (function () {
             result += r.getR();
         }
         return result;
+    };
+    SeriesCircuit.prototype.biggestR = function () {
+        var result = 0;
+        var list = [];
+        for (var i = 0; i < this.resistors.length; i++) {
+            list.push(this.resistors[i].getR());
+        }
+        return Math.max.apply(null, list);
     };
     return SeriesCircuit;
 }());

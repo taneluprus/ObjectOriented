@@ -9,7 +9,7 @@ class Resistor{
         this.parent=p;
     }
     draw(g, startx:number, y:number){
-        g.clearRect(startx, y-this.height/2, this.width, this.height);
+        g.clearRect(startx, y-this.height/2, this.width+20, this.height);
         g.beginPath();
         g.moveTo(startx, y);
         g.lineTo(startx+this.width/4, y);
@@ -56,27 +56,33 @@ class SeriesCircuit{
         this.g.beginPath();
         this.g.rect(areaStartX, this.y-20, x-areaStartX, 40);
         this.g.stroke();
-        if (this.r > 500) {
-            g.strokeStyle="brown"
-            this.g.beginPath();
-            this.g.rect(startx,y,startx+150,y+40)
-            this.g.stroke()
-
+        
+        for(let i=0; i<this.resistors.length; i++){
+        if (this.resistors[i].getR() > 500) {
+        this.g.strokeStyle="brown";}
+        else{
+            this.g.strokeStyle="black";
         }
-        this.g.strokeStyle="black";
         this.g.beginPath();
         this.g.moveTo(x, this.y);
         x+=5;
         this.g.lineTo(x, this.y);
         this.g.stroke()
-        this.g.fillText(this.getR()+ " Ω", this.startx+this.width/2-10, this.y+20)
-
+        this.g.fillText(this.getR()+ " Ω"+ "   "+ this.biggestR()+" Ω", this.startx+this.width/2-10, this.y+20)
     }
+}
     getR(){
         let result:number=0
         for (let r of this.resistors){
-            result+=r.getR();
+            result+=r.getR()
         }
-        return result;
+        return result;}
+    biggestR(){
+        let result:number = 0
+        const list:number[] = [];
+        for(let i=0; i<this.resistors.length; i++){
+        list.push(this.resistors[i].getR())
     }
+    return Math.max.apply(null,list)
+}
 }
